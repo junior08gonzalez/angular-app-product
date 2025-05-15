@@ -1,0 +1,39 @@
+<h2>Formulario de Producto</h2>
+<form (ngSubmit)="formValidated(productForm)" #productForm="ngForm">
+    <div>
+        <input type="text" #name="ngModel" required placeholder="Name" class="form-control my-2"  name="name" [(ngModel)]="product.name">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+            <div>
+                Nombre es requerido
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="text" required #description="ngModel" placeholder="Description"   class="form-control my-2" name="description" [(ngModel)]="product.description">
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+            <div>
+                Descripcion es requerido
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="number" #price="ngModel" min="1" name="price" [(ngModel)]="product.price" class="form-control my-2">
+        <div *ngIf="price.invalid && (price.dirty || price.touched)" class="text-danger">
+            @if (price.errors!['required']) {
+                <div>
+                    Precio es requerido
+                </div>
+            }
+            @if (price.errors!['min']) {
+                <div>
+                    El precio debe ser mayor a 1
+                </div>
+            }
+        </div>
+    </div>
+    <div>
+        <button
+        [disabled]="!productForm.form.valid" 
+        type="submit" class="btn btn-primary">{{product.id > 0 ? 'Update': 'Crear'}}</button>
+    </div>
+</form>
